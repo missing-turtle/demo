@@ -1,2 +1,0 @@
-# lupin
-lupin demo
