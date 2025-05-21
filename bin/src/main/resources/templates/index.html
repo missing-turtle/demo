@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko" 
+	xmlns:th="http://www.thymeleaf.org"
+	layout:decorate="~{layout/layout}">
+<body>
+	<div layout:fragment="content">
+	<h1>springboot</h1>
+	<ul>
+		<li><a href="/board/list?pageNumber=1&pageSize=10">게시물 목록</a></li>
+	</ul>
+	<p th:text="${message}"></p>
+	
+	<div th:object="${obj}">
+		<p>이름 : <span th:text="*{name}"></span></p>
+		<p>이름 : <span th:if="*{name == '최종선'}">조건식이 참이다.</span></p>
+		<p>이름 : <span th:if="*{name.toString().equals('최종선')}">조건식이 참이다2.</span></p>
+		<p>나이 : <span th:text="*{age}"></span></p>
+		<p>나이2 : <span th:text="*{age > 20} ? '성인' : '미성년자'"></span></p>
+		<p>전번 : <span th:text="*{tel}"></span></p>
+		<p>나이3 : 
+			<span th:if="*{age >= 20}">성인</span>
+			<span th:unless="*{age >= 20}">미성년자</span>
+		</p>
+	</div>
+	
+	<table>
+		<colgroup>
+			<col />
+			<col />
+		</colgroup>
+		<thead>
+			<tr>
+				<th>이름</th>
+				<th>가격</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="item : ${list}">
+				<td th:text="${item.name}"></td>
+				<td th:text="${item.price}"></td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+</body>
+</html>

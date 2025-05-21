@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ko" 
+	xmlns:th="http://www.thymeleaf.org"
+	layout:decorate="~{layout/layout}">
+<body>
+	<div layout:fragment="content">
+		<form method="post" action="/member/loginProc">
+			<input type="text" name="username" value="SMITH" />
+			<input type="password" name="password" value="CLERK" />
+			<button type="submit">전송</button>
+		</form>
+		
+		
+		
+	</div>
+</body>
+</html>

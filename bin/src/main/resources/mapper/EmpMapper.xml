@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.EmpMapper">
+
+	<select id="selectEmp" resultType="EmpVO" parameterType="EmpVO">
+		SELECT EMPNO, ENAME FROM EMP
+		<where>
+			<if test="${eName != '' and eName != null}">
+				AND ENAME = #{eName}
+			</if>
+			<if test="${deptNo != 0}">
+				AND DEPTNO = #{deptNo}
+			</if>
+			<if test="${empNo != 0}">
+				AND EMPNO = #{empNo}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 로그인 쿼리 -->
+	<select id="userLogin" resultType="EmpVO" parameterType="LoginRequest">
+		SELECT * FROM EMP 
+			WHERE ENAME = #{username} 
+			AND JOB = #{password}
+	</select>
+
+</mapper>
+

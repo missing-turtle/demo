@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	<th:block th:fragment="headerFragment">
+		<header><h1>헤더</h1></header>
+		<a href="/member/login">로그인</a>
+		<a href="/">메인으로 이동</a>
+		<div th:object="${userInfo}">
+			<p th:text="*{eName}"></p>
+			<a href="/member/logout" th:if="*{eName != null}">로그아웃</a>
+			<a href="/member/login" th:unless="*{eName != null}">로그인</a>
+		</div>
+	</th:block>
+</html>

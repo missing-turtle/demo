@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko" 
+	xmlns:th="http://www.thymeleaf.org"
+	layout:decorate="~{layout/layout}">
+<body>
+	<div layout:fragment="content">
+		<style>
+			table {
+				width: 100%;
+				border-collapse: collapse;
+			}
+			table th, table td {
+				border: 1px solid #ccc;
+			}
+		</style>
+		<table>
+			<colgroup>
+				<col />
+				<col />
+			</colgroup>
+			<thead>
+				<tr>
+					<th>번호</th>
+					<th>이름</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="item : ${list}">
+					<td th:text="${item.rowNumber}"></td>
+					<td th:with="
+					    url='/board/view?boardNo=' + ${item.boardNo}
+					        + (${searchHelper.pageNumber} != null ? '&pageNumber=' + ${searchHelper.pageNumber} : '&pageNumber=1')
+					        + (${searchHelper.pageSize} != null ? '&pageSize=' + ${searchHelper.pageSize} : '&pageSize=10')
+					        + (${searchHelper.searchType} != null ? '&searchType=' + ${searchHelper.searchType} : '&searchType=')
+					        + (${searchHelper.searchKeyword} != null ? '&searchKeyword=' + ${searchHelper.searchKeyword} : '&searchKeyword=')
+					">
+					  <a th:href="${url}" th:text="${item.boardTitle}">링크</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div>
+			<ul>
+				<li th:if="${currentPage > 1}">
+		            <a th:href="@{|?pageNumber=${currentPage - 1}&pageSize=10|}">이전</a>
+		        </li>
+		        <li th:each="i : ${#numbers.sequence(1, totalPages)}"
+		            th:classappend="${i == currentPage} ? 'active'">
+		            <a th:href="@{|?pageNumber=${i}&pageSize=10|}" th:text="${i}"></a>
+		        </li>
+				<li th:if="${currentPage < totalPages}">
+		            <a th:href="@{|?pageNumber=${currentPage + 1}&pageSize=10|}">다음</a>
+		        </li>
+		    </ul>
+		</div>
+		<a href="/board/write">글쓰기</a>
+	</div>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko" 
+	xmlns:th="http://www.thymeleaf.org"
+	layout:decorate="~{layout/layout}">
+<body>
+	<div layout:fragment="content">
+		<form method="post" action="/board/save" th:object="${result}">
+			<input type="hidden" name="boardNo" th:value="*{boardNo}" />
+			<div>
+				<label for="title">제목</label>
+				<input type="text" name="boardTitle" id="title" th:value="*{boardTitle}" />
+			</div>
+			<div>
+				<label for="content">내용</label>
+				<textarea id="summernote" name="boardContent" th:text="*{boardContent}"></textarea>
+			</div>
+			<input type="file" id="file" multiple />
+			<button type="submit">제출</button>
+			<a href="/board/list">취소</a>
+		</form>
+<script>
+document.querySelector('#file')
+	.addEventListener('change', function(e){
+		console.log(e.target.files)
+		const formData = new FormData();
+		for (let i = 0; i < e.target.files.length; i++) {
+			formData.append('files', e.target.files[i]);
+		}
+		fetch('/api/file/save', {
+			method: 'post',
+			body: formData
+		}).then(res => res.json())
+		.then(data => {
+			console.log(data);
+		});
+	})
+</script>
+		
+		
+		
+		
+		<script th:inline="javascript">
+			$(document).ready(function() {
+			  $('#summernote').summernote({
+				height: 200,
+				placeholder: '내용을 입력하세요.'
+			  });
+			  const boardContent = [[${result != null && 
+				result.boardContent != null ? "'" + 
+				result.boardContent + "'" : ""}]];
+			  $('#summernote').summernote('insertText', boardContent);
+			});
+		</script>
+	</div>
+</body>
+</html>
